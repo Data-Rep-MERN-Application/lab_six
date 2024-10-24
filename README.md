@@ -92,7 +92,7 @@ npm install
   ]
 }
 ```
-
+- Ensure that the domain of the server is now localhost:4000
 ---
 
 ### 4. Connect the React App to Read Data from the Node/Express Server
