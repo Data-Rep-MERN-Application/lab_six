@@ -5,31 +5,40 @@ The following exercises focus on using **Node/Express** and **React** to represe
 
 ---
 
-### 1. Create a Git Repository
 
-- Create a git repository to store your answers for this problem sheet.
-- Push the repository to GitHub.
-- Make a commit and push it to GitHub after completing each exercise.
+### Steps:
+1. **Create a Git Repository:**
+    First, create a folder for your project, initialize it as a Git repository using `git init`. This will allow you to track changes to your project.
 
-**Solution:**
+    ```bash
+    git init
+    ```
 
-```bash
-˜/Desktop > mkdir answers-curl
-------------------------------------------------------------
-˜/Desktop > cd answers-curl
-------------------------------------------------------------
-˜/Desktop/answers-curl(branch:master) > touch README.md
-------------------------------------------------------------
-˜/Desktop/answers-curl > git init
-Initialized empty Git repository in /Users/ian/Desktop/answers-curl/.git/
-------------------------------------------------------------
-˜/Desktop/answers-curl(branch:master*) > git add .
-------------------------------------------------------------
-˜/Desktop/answers-curl(branch:master*) > git commit -m "Empty first commit."
-[master (root-commit) 6583cf6] Empty first commit.
-1 file changed, 0 insertions(+), 0 deletions(-)
-create mode 100644 README.md
-```
+2. **Stage and Commit Files:**
+    Stage all files and create your first commit:
+    
+    ```bash
+    git add .
+    git commit -m "Initial commit"
+    ```
+
+3. **Rename the Default Branch:**
+    Rename the default branch to `main` (since this is the new standard for Git):
+    
+    ```bash
+    git branch -M main
+    ```
+
+    4. **Push to GitHub:**
+    Link the repository to a remote GitHub repository:
+    
+    ```bash
+    git remote add origin <your-github-repo-url>
+    git push -u origin main
+    ```
+
+5. **Commit Regularly:**
+    After each exercise, make sure to commit your changes to track progress.
 
 ---
 
