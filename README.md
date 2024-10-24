@@ -189,4 +189,3 @@ By completing this lab, you have gained practical experience in building and int
 
 By combining these skills, you now have a better understanding of how to create a full-stack application where the frontend communicates with a backend server, enabling dynamic data rendering and interaction.
 
-```
