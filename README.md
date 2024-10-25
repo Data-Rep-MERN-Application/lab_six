@@ -29,7 +29,7 @@ The following exercises focus on using **Node/Express** and **React** to represe
     git branch -M main
     ```
 
-    4. **Push to GitHub:**
+4. **Push to GitHub:**
     Link the repository to a remote GitHub repository:
     
     ```bash
