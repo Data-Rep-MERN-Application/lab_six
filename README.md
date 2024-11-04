@@ -144,13 +144,7 @@ To allow communication between your React app and Node/Express server, you need 
 
 **Solution:**
 
-```javascript
-// Express Server
-app.post('/api/movies', (req, res) => {
-  console.log(req.body);
-  res.status(201).send('Movie created');
-});
-```
+
 
 ```javascript
 // create.js
