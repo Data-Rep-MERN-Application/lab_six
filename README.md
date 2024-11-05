@@ -142,6 +142,21 @@ To allow communication between your React app and Node/Express server, you need 
 - Add a **POST** method to the Express server that logs the title, year, and poster URL of the movie object passed from the React app.
 - The POST route should be available at `/api/movies` on the server.
 
+1. **Install `body-parser`:**
+   To handle POST requests, install `body-parser`:
+   
+   ```bash
+   npm install body-parser
+   ```
+
+2. **Update `server.js`:**
+   Add body-parser middleware:
+   
+   ```javascript
+   const bodyParser = require('body-parser');
+   app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+   ```
 **Solution:**
 
 
