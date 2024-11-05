@@ -155,7 +155,7 @@ To allow communication between your React app and Node/Express server, you need 
    ```javascript
    const bodyParser = require('body-parser');
    app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json());
+   app.use(bodyParser.json());
    ```
 **Solution:**
 
