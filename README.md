@@ -1,162 +1,157 @@
-# Lab 3: React(Props) - Representation & Querying
+# Lab 4: React - HTTP & Hooks Data Representation & Querying
 
-This lab involves building upon previous React applications to implement props-based data handling and querying using components.
+The following exercises are related to the use of React.
 
-## Exercise 1: Creating New Components
 
-In the last lab, we created a React application with client-side routing and a Bootstrap navigation bar. If you didn’t finish last week’s lab, you can clone the final solution from the following repository:  
-[GitHub Repository - Lab Two](https://github.com/Data-Rep-MERN-Application/lab_two)
 
-### Task 1:
-Add two new function components named `Read` and `Create` to your application. Each component should have an `h3` tag with a message indicating the component (e.g., "Hello from the Read component"). Update the navigation bar to include links to these components.
+## 1. (a) In last week’s lab we built a React Application that embedded components that exchange data. The final solution to last week’s lab can be found at:  
+https://github.com/Data-Rep-MERN-Application/lab_three.
 
-### Task 2:
-In the `Read` component, add a constant variable that holds the following JSON data for movies:
+However, you should use your lab solution from last week. Clone this application if you did not finish the application last week.
 
-```json
-[
-  {
-    "Title": "Avengers: Infinity War",
-    "Year": "2018",
-    "imdbID": "tt4154756",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-  },
-  {
-    "Title": "Captain America: Civil War",
-    "Year": "2016",
-    "imdbID": "tt3498820",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-  },
-  {
-    "Title": "World War Z",
-    "Year": "2013",
-    "imdbID": "tt0816711",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
-  }
-]
+### To clone the application:
+```bash
+git clone https://github.com/Data-Rep-MERN-Application/lab_three
+```
+We then need to run:
+```bash
+npm install
+# This will install all the prerequisites for the application.
 ```
 
-Pass this data to a new `Movies` component and display it.
+### (b) Add **Axios** to our project. **Axios** is a Promise-based HTTP client used to make requests to a server. It allows you to send asynchronous HTTP requests (such as GET or POST requests) to REST endpoints and handle responses. Axios is often preferred for fetching data in React applications because of its ease of use, ability to transform requests and responses, and support for older browsers compared to the native `fetch` API.
 
-### Task 3:
-Add another functional component named `MovieItem`. This component will be responsible for rendering individual movie details. Use the `map()` function in the `Movies` component to iterate through the movie array and pass each movie as props to the `MovieItem` component.
+- **Key Features of Axios:**
+  - Supports HTTP requests: `GET`, `POST`, `PUT`, `DELETE`, etc.
+  - Automatically transforms JSON data.
+  - Intercepts requests and responses.
+  - Supports request timeout and cancellation.
+  - Provides built-in CSRF protection.
 
----
-
-### **Detailed Explanation: Props**
-
-In React, **props** (short for properties) are a mechanism for passing data from a parent component to a child component. This allows components to be dynamic and reusable. The parent component passes values to the child component, which can then use that data to render dynamic content.
-
-For example, in the `Read` component, the movie data is passed to the `Movies` component via props:
-
-```javascript
-<Movies myMovies={data} />
+Install Axios by running:
+```bash
+npm install axios
 ```
 
-Here, `myMovies` is the prop name, and the `data` is the value being passed. Inside the `Movies` component, we access this data via `props.myMovies`:
+### (c) Use the React hook, useEffect, to synchronize a component with an external system.  
+Reference: https://react.dev/reference/react/useEffect
 
+### (d) In this lifecycle hook, make an HTTP GET call that will return the JSON data from (https://data-rep-mern-application.github.io/dataserver/movies.json) and assign it to the component state. Use the React hook useState:  
+Reference: https://react.dev/reference/react/useState
+
+### What is `useState`?
+
+`useState` is a built-in hook in React that allows you to add state variables to functional components. Before `useState`, managing state in components was only possible in class components, but with this hook, functional components can now store and manage state as well. 
+
+- **Syntax:**
+  ```javascript
+  const [state, setState] = useState(initialValue);
+  ```
+  - `state`: This is the current state value, which you can use in your component.
+  - `setState`: This is a function that allows you to update the state value.
+  - `initialValue`: This is the initial value of the state when the component is first rendered.
+
+For example:
 ```javascript
-function Movies(props) {
-  return props.myMovies.map((movie) => (
-    <MovieItem mymovie={movie} key={movie.imdbID} />
-  ));
-}
+const [count, setCount] = useState(0);
 ```
+This creates a `count` state variable with an initial value of `0`, and `setCount` is the function that will be used to update `count`.
 
-The `Movies` component now passes the `movie` data down to the `MovieItem` component as another prop called `mymovie`:
+In the solution below, `useState` is used to store data returned from an API and manage the state of the application.
 
+### Solution:
 ```javascript
-<MovieItem mymovie={movie} key={movie.imdbID} />
-```
+//Read.js
 
-Props allow for clear communication between components, keeping components modular and reusable. The key thing to remember about props is that they are **read-only**. A component receiving props should not modify them but can use them for rendering.
+import Movies from "./movies";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
----
+function Read() {
+  const [movies, setMovies] = useState([]);
 
-### **Detailed Explanation: useEffect() Hook**
-
-The `useEffect()` hook is one of React's most important hooks for handling side effects in functional components. A side effect is anything that affects something outside the scope of the function being executed, such as data fetching, subscriptions, or manually changing the DOM.
-
-In this lab, `useEffect()` is used to log props to the console whenever the component mounts or updates:
-
-```javascript
-useEffect(() => {
-  console.log("Movies:", props.myMovies);
-}, []);
-```
-
-### Key points about `useEffect()`:
-
-1. **Runs after render:**  
-   By default, `useEffect()` runs after every render. If no dependency array is provided (like `[]`), it will execute after every render cycle of the component.
-
-2. **Dependency array:**  
-   If you provide a dependency array as the second argument to `useEffect()`, it will only run if the values in that array change. For example, to only run the effect when `props.myMovies` changes, we could write:
-
-   ```javascript
-   useEffect(() => {
-     console.log("Movies:", props.myMovies);
-   }, [props.myMovies]);
-   ```
-
-3. **Cleanup:**  
-   `useEffect()` can return a cleanup function, which is run when the component unmounts or before the next effect is executed. This is useful for cleaning up subscriptions or resetting state:
-
-   ```javascript
-   useEffect(() => {
-     const subscription = someAPICall();
-     
-     return () => {
-       subscription.unsubscribe(); // Cleanup when component unmounts
-     };
-   }, []);
-   ```
-
-### Example with `useEffect` in the `MovieItem` Component:
-
-```javascript
-import { useEffect } from "react";
-import Card from 'react-bootstrap/Card';
-
-function MovieItem(props) {
   useEffect(() => {
-    console.log("Movie Item:", props.mymovie);
-  }, [props.mymovie]); // Only run this effect when the mymovie prop changes
+    axios.get('<my_api_url>')
+      .then((response) => {
+        setMovies(response.data.movies);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div>
-      <Card>
-        <Card.Header>{props.mymovie.Title}</Card.Header>
-        <Card.Body>
-          <blockquote className="blockquote mb-0">
-            <img src={props.mymovie.Poster} alt={props.mymovie.Title} />
-            <footer>{props.mymovie.Year}</footer>
-          </blockquote>
-        </Card.Body>
-      </Card>
+      <h2>This is my Read Component.</h2>
+      <Movies myMovies={movies} />
     </div>
   );
 }
 
-export default MovieItem;
+export default Read;
 ```
 
-In this example, every time the `mymovie` prop changes (which happens when new movie data is passed), the `useEffect()` hook logs the new movie details to the console.
+## 2. (a) Modify the Create component so that it now includes a form that will upload data to a server. An example of this can be found at:  
+https://react.dev/reference/react-dom/components#form-components. 
+
+The application should now look like this:
+
+### (b) The application should handle the new events from the button click and log the information submitted in the form to the console as shown below.  
+Hint: The code for the movie title input control is:
+```html
+<div className="form-group">
+  <label>Add Movie Title: </label>
+  <input type="text"
+    className="form-control"
+    value={title}
+    onChange={(e) => { setTitle(e.target.value) }} 
+  />
+</div>
+```
+
+### Solution:
+```javascript
+// create.js
+
+import { useState } from "react";
+
+function Create() {
+  const [title, setTitle] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(title);
+  }
+
+  return (
+    <div>
+      <h2>This is my Create Component.</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Add Movie Title: </label>
+          <input type="text"
+            className="form-control"
+            value={title}
+            onChange={(e) => { setTitle(e.target.value) }}
+          />
+        </div>
+        <input type="submit" value="Add Movie" />
+      </form>
+    </div>
+  );
+}
+
+export default Create;
+```
+
+### (c) Extend the above code to include fields for **Movie Year** and **Movie Poster**.
+
+- Add a form input field for **Movie Year**, where users can input the release year of the movie.
+- Add a form input field for **Movie Poster**, where users can provide a URL to the movie poster.
+
+Make sure that these new fields are managed using React's `useState` and that the input values are logged to the console upon form submission.
 
 ---
-
-## Exercise 2: Adding Bootstrap Cards
-
-Enhance the `MovieItem` component by using [React Bootstrap Cards](https://react-bootstrap.github.io/docs/components/cards). You can follow the card structure from the official React Bootstrap documentation.
-
-**Expected Output:**  
-Each movie item should be displayed as a card with the movie title as the header, the poster image in the body, and the year at the footer.
-
----
-
 ## Exercise 3: Setting up Git Repository
 
 **Create a Git Repository:** First, create a folder for your React project and initialize it as a Git repository using `git init`. This will allow you to track changes to your project and collaborate effectively.
@@ -185,19 +180,4 @@ git remote add origin <your-github-repo-url>
 git push -u origin main
 ```
 
-### Summary of Learning
-By completing these exercises, students should have gained the following knowledge and skills related to React:
-
-1. **Understanding and Utilizing Props**: 
-   - You have learned how to pass data between components using props, a core concept in React. This includes how to render data dynamically and handle child-to-parent communication.
-
-2. **Component Creation and Modularity**: 
-   - You have created reusable function components (`Read`, `Create`, and `MovieItem`), helping you understand the modular design principles of React.
-
-3. **Rendering Data from JSON**:
-   - You practiced rendering data dynamically from a JSON object within your `Read` component, gaining insight into handling and displaying API responses or local data.
-
-4. **State Management and Side Effects**:
-   - You were introduced to the `useEffect` hook, learning how to manage side effects in function components, such as fetching or updating data when certain props change.
-
-By solving these problems, you’ve gained foundational knowledge in React that will help you build more complex and dynamic web applications in the future.
+---
