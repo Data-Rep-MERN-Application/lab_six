@@ -120,7 +120,7 @@ To allow communication between your React app and Node/Express server, you need 
 
    In your `server.js` file, add the following code to enable CORS for your server:
 
-   ```bash 
+     ```javascript
 import cors from 'cors';
 app.use(cors());
 
@@ -153,7 +153,8 @@ app.use(function(req, res, next) {
    Add body-parser middleware:
    
    ```javascript
-   const bodyParser = require('body-parser');
+   
+   import bodyParser from 'body-parser';
    app.use(bodyParser.urlencoded({ extended: true }));
    app.use(bodyParser.json());
    ```
