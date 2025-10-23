@@ -121,15 +121,15 @@ To allow communication between your React app and Node/Express server, you need 
    In your `server.js` file, add the following code to enable CORS for your server:
 
    ```javascript
-   const cors = require('cors');
-   app.use(cors());
+import cors from 'cors';
+app.use(cors());
 
-   app.use(function(req, res, next) {
-     res.header("Access-Control-Allow-Origin", "*");
-     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-     next();
-   });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
    ```
 
    This middleware setup allows your frontend app (React) to make API requests to the backend (Express) without encountering CORS-related issues.
