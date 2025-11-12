@@ -1,179 +1,45 @@
-# Lab 4: React - HTTP & Hooks Data Representation & Querying
+# Lab 6: React and Node/Express Data Representation and Querying
 
-The following exercises are related to the use of React.
-
-
-
-## 1. (a) In last week’s lab we built a React Application that embedded components that exchange data. The final solution to last week’s lab can be found at:  
-https://github.com/Data-Rep-MERN-Application/lab_three.
-
-However, you should use your lab solution from last week. Clone this application if you did not finish the application last week.
-
-### To clone the application:
-```bash
-git clone https://github.com/Data-Rep-MERN-Application/lab_three
-```
-We then need to run:
-```bash
-npm install
-# This will install all the prerequisites for the application.
-```
-
-### (b) Add **Axios** to our project. **Axios** is a Promise-based HTTP client used to make requests to a server. It allows you to send asynchronous HTTP requests (such as GET or POST requests) to REST endpoints and handle responses. Axios is often preferred for fetching data in React applications because of its ease of use, ability to transform requests and responses, and support for older browsers compared to the native `fetch` API.
-
-- **Key Features of Axios:**
-  - Supports HTTP requests: `GET`, `POST`, `PUT`, `DELETE`, etc.
-  - Automatically transforms JSON data.
-  - Intercepts requests and responses.
-  - Supports request timeout and cancellation.
-  - Provides built-in CSRF protection.
-
-Install Axios by running:
-```bash
-npm install axios
-```
-
-### (c) Use the React hook, useEffect, to synchronize a component with an external system.  
-Reference: https://react.dev/reference/react/useEffect
-
-### (d) In this lifecycle hook, make an HTTP GET call that will return the JSON data from (https://data-rep-mern-application.github.io/dataserver/movies.json) and assign it to the component state. Use the React hook useState:  
-Reference: https://react.dev/reference/react/useState
-
-### What is `useState`?
-
-`useState` is a built-in hook in React that allows you to add state variables to functional components. Before `useState`, managing state in components was only possible in class components, but with this hook, functional components can now store and manage state as well. 
-
-- **Syntax:**
-  ```javascript
-  const [state, setState] = useState(initialValue);
-  ```
-  - `state`: This is the current state value, which you can use in your component.
-  - `setState`: This is a function that allows you to update the state value.
-  - `initialValue`: This is the initial value of the state when the component is first rendered.
-
-For example:
-```javascript
-const [count, setCount] = useState(0);
-```
-This creates a `count` state variable with an initial value of `0`, and `setCount` is the function that will be used to update `count`.
-
-In the solution below, `useState` is used to store data returned from an API and manage the state of the application.
-
-### Solution:
-```javascript
-//Read.js
-
-import Movies from "./movies";
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-function Read() {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    axios.get('<my_api_url>')
-      .then((response) => {
-        setMovies(response.data.movies);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  return (
-    <div>
-      <h2>This is my Read Component.</h2>
-      <Movies myMovies={movies} />
-    </div>
-  );
-}
-
-export default Read;
-```
-
-## 2. (a) Modify the Create component so that it now includes a form that will upload data to a server. An example of this can be found at:  
-https://react.dev/reference/react-dom/components#form-components. 
-
-The application should now look like this:
-
-### (b) The application should handle the new events from the button click and log the information submitted in the form to the console as shown below.  
-Hint: The code for the movie title input control is:
-```html
-<div className="form-group">
-  <label>Add Movie Title: </label>
-  <input type="text"
-    className="form-control"
-    value={title}
-    onChange={(e) => { setTitle(e.target.value) }} 
-  />
-</div>
-```
-
-### Solution:
-```javascript
-// create.js
-
-import { useState } from "react";
-
-function Create() {
-  const [title, setTitle] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(title);
-  }
-
-  return (
-    <div>
-      <h2>This is my Create Component.</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Add Movie Title: </label>
-          <input type="text"
-            className="form-control"
-            value={title}
-            onChange={(e) => { setTitle(e.target.value) }}
-          />
-        </div>
-        <input type="submit" value="Add Movie" />
-      </form>
-    </div>
-  );
-}
-
-export default Create;
-```
-
-### (c) Extend the above code to include fields for **Movie Year** and **Movie Poster**.
-
-- Add a form input field for **Movie Year**, where users can input the release year of the movie.
-- Add a form input field for **Movie Poster**, where users can provide a URL to the movie poster.
-
-Make sure that these new fields are managed using React's `useState` and that the input values are logged to the console upon form submission.
+The following exercises focus on using **Node/Express** and **React** to represent and query data.
 
 ---
-## Exercise 3: Setting up Git Repository
 
-**Create a Git Repository:** First, create a folder for your React project and initialize it as a Git repository using `git init`. This will allow you to track changes to your project and collaborate effectively.
+## Steps
+
+### 1. Create a Git Repository
+
+First, create a folder for your project and initialize it as a Git repository:
 
 ```bash
 git init
 ```
 
-Stage all files and create the first commit:
+---
+
+### 2. Stage and Commit Files
+
+Stage all files and create your first commit:
 
 ```bash
 git add .
 git commit -m "Initial commit"
 ```
 
-After staging and committing, rename the default branch to `main` (since Git now uses `main` as the default branch name for new repositories):
+---
+
+### 3. Rename the Default Branch
+
+Rename the default branch to `main`:
 
 ```bash
 git branch -M main
 ```
 
-Finally, push the repository to GitHub by linking it to a remote GitHub repository:
+---
+
+### 4. Push to GitHub
+
+Link the repository to a remote GitHub repository:
 
 ```bash
 git remote add origin <your-github-repo-url>
@@ -181,3 +47,165 @@ git push -u origin main
 ```
 
 ---
+
+### 5. Commit Regularly
+
+After each exercise, make sure to commit your changes to track progress.
+
+---
+
+## 2. Clone and Setup a React Application
+
+* In the last React lab, we built a React application that used components to create and read **movie** data.
+* The final solution can be found here:
+  [GitHub Repository](https://github.com/Data-Rep-MERN-Application/lab_four)
+
+If you did not finish it last week, clone it:
+
+```bash
+git clone https://github.com/Data-Rep-MERN-Application/lab_four
+```
+
+Then install dependencies:
+
+```bash
+npm install
+```
+
+---
+
+## 3. Create a Backend with Express
+
+* Create a new folder in your React app called **BackEnd** and add a file named `server.js` inside it.
+* Develop a server using the **Express** framework that returns the following JSON when a GET request is made to `/api/movies`:
+
+```json
+{
+  "movies": [
+    {
+      "Title": "Avengers: Infinity War (server)",
+      "Year": "2018",
+      "imdbID": "tt4154756",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Captain America: Civil War (server)",
+      "Year": "2016",
+      "imdbID": "tt3498820",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
+    },
+    {
+      "Title": "World War Z (server)",
+      "Year": "2013",
+      "imdbID": "tt0816711",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
+    }
+  ]
+}
+```
+
+Ensure that the server runs on **localhost:4000**.
+
+---
+
+## 4. Connect the React App to Read Data from the Node/Express Server
+
+Modify the React app to fetch JSON data from the Node/Express server.
+
+### What is CORS?
+
+**CORS (Cross-Origin Resource Sharing)** is a security feature that prevents a web page from requesting data from a different domain or port unless the server explicitly allows it.
+
+Without CORS, your frontend (React at `localhost:3000`) cannot communicate with your backend (Node/Express at `localhost:4000`).
+
+---
+
+### Installing and Using CORS Middleware in Node.js
+
+1. **Install CORS package:**
+
+   ```bash
+   npm install cors
+   ```
+
+2. **Use CORS in the server:**
+
+   Add this code in your `server.js` file:
+
+   ```javascript
+   import cors from 'cors';
+   app.use(cors());
+
+   app.use(function(req, res, next) {
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     next();
+   });
+   ```
+
+This middleware setup allows your frontend app (React) to make API requests to the backend (Express) without CORS issues.
+
+---
+
+## 5. Add POST Request to the React App
+
+Modify the React app to send a **POST** request to the server with a new movie object.
+
+1. **Install `body-parser`:**
+
+   ```bash
+   npm install body-parser
+   ```
+
+2. **Update `server.js`:**
+
+   ```javascript
+   import bodyParser from 'body-parser';
+   app.use(bodyParser.urlencoded({ extended: true }));
+   app.use(bodyParser.json());
+   ```
+
+3. **Modify `Create.js`:**
+
+   ```javascript
+   const handleSubmit = (e) => {
+     e.preventDefault();
+     
+     console.log(`Title: ${title}, Year: ${year}, Poster: ${poster}`);
+     
+     const movie = {
+       title: title,
+       year: year,
+       poster: poster
+     };
+     
+     axios.post('http://localhost:3000/api/movies', movie)
+       .then((res) => console.log(res.data))
+       .catch((err) => console.log(err.data));
+   };
+   ```
+
+---
+
+## Lab Summary: What You Have Learned
+
+By completing this lab, you have learned:
+
+1. **Cross-Origin Resource Sharing (CORS)**
+
+   * What it is, why it’s important, and how to enable it in Express.
+
+2. **Making HTTP Requests from React**
+
+   * Using Axios to send GET requests and display dynamic data.
+
+3. **Handling POST Requests**
+
+   * Creating forms in React and handling POST data in Express.
+
+Together, these steps show how to build a full-stack application where the frontend (React) communicates with a backend (Node/Express) for dynamic, data-driv
+
