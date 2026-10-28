@@ -119,7 +119,7 @@ Modify the React app to fetch JSON data from the Node/Express server.
 
 **CORS (Cross-Origin Resource Sharing)** is a security feature that prevents a web page from requesting data from a different domain or port unless the server explicitly allows it.
 
-Without CORS, your frontend (React at `localhost:3000`) cannot communicate with your backend (Node/Express at `localhost:4000`).
+Without CORS, your frontend (React at `localhost:5173`) cannot communicate with your backend (Node/Express at `localhost:4000`).
 
 ---
 
