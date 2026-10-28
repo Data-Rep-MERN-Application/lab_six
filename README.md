@@ -161,10 +161,10 @@ Modify the React app to send a **POST** request to the server with a new movie o
    npm install body-parser
    ```
 
-2. **Update `server.js`:**
+2. **Update `server.cjs`:**
 
    ```javascript
-   import bodyParser from 'body-parser';
+   const bodyParser = require('body-parser');
    app.use(bodyParser.urlencoded({ extended: true }));
    app.use(bodyParser.json());
    ```
