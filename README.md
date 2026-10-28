@@ -76,7 +76,7 @@ npm install
 
 ## 3. Create a Backend with Express
 
-* Create a new folder in your React app called **BackEnd** and add a file named `server.js` inside it.
+* Create a new folder in your React app called **BackEnd** and add a file named `server.cjs` inside it.
 * Develop a server using the **Express** framework that returns the following JSON when a GET request is made to `/api/movies`:
 
 ```json
@@ -136,7 +136,7 @@ Without CORS, your frontend (React at `localhost:3000`) cannot communicate with 
    Add this code in your `server.js` file:
 
    ```javascript
-   import cors from 'cors';
+   const cors = require('cors');
    app.use(cors());
 
    app.use(function(req, res, next) {
